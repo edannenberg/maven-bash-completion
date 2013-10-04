@@ -1,3 +1,8 @@
+# where plugin config is stored, no trailing slash!
+plugin_config_path=~/.bash_completion_maven.d 
+
+[ -d $plugin_config_path ] || mkdir -p $plugin_config_path
+
 function_exists()
 {
 	declare -F $1 > /dev/null
@@ -60,53 +65,11 @@ _mvn()
     local common_site_lifecycle="pre-site|site|post-site|site-deploy"
     local common_lifecycle_phases="${common_clean_lifecycle}|${common_default_lifecycle}|${common_site_lifecycle}"
 
-    local plugin_goals_android="android:apk|android:apklib|android:clean|android:deploy|android:deploy-dependencies|android:dex|android:emulator-start|android:emulator-stop|android:emulator-stop-all|android:generate-sources|android:help|android:instrument|android:manifest-update|android:pull|android:push|android:redeploy|android:run|android:undeploy|android:unpack|android:version-update|android:zipalign|android:devices"
-    local plugin_goals_ant="ant:ant|ant:clean"
-    local plugin_goals_antrun="antrun:run"
-    local plugin_goals_archetype="archetype:generate|archetype:create-from-project|archetype:crawl"
-    local plugin_goals_assembly="assembly:single|assembly:assembly"
-    local plugin_goals_buildnumber="buildnumber:create|buildnumber:create-timestamp|buildnumber:help|buildnumber:hgchangeset"
-    local plugin_goals_cargo="cargo:start|cargo:run|cargo:stop|cargo:deploy|cargo:undeploy|cargo:help"
-    local plugin_goals_checkstyle="checkstyle:checkstyle|checkstyle:check"
-    local plugin_goals_cobertura="cobertura:cobertura"
-    local plugin_goals_dependency="dependency:analyze|dependency:analyze-dep-mgt|dependency:analyze-only|dependency:analyze-report|dependency:build-classpath|dependency:copy|dependency:copy-dependencies|dependency:get|dependency:go-offline|dependency:list|dependency:purge-local-repository|dependency:resolve|dependency:resolve-plugins|dependency:sources|dependency:tree|dependency:unpack|dependency:unpack-dependencies"
-    local plugin_goals_deploy="deploy:deploy-file"
-    local plugin_goals_ear="ear:ear|ear:generate-application-xml"
-    local plugin_goals_eclipse="eclipse:clean|eclipse:eclipse"
-    local plugin_goals_ejb="ejb:ejb"
-    local plugin_goals_enforcer="enforcer:enforce|enforcer:display-info"
-    local plugin_goals_exec="exec:exec|exec:java"
-    local plugin_goals_failsafe="failsafe:integration-test|failsafe:verify"
-    local plugin_goals_flyway="flyway:clean|flyway:history|flyway:init|flyway:migrate|flyway:status|flyway:validate"
-    local plugin_goals_gpg="gpg:sign|gpg:sign-and-deploy-file"
-    local plugin_goals_grails="grails:clean|grails:config-directories|grails:console|grails:create-controller|grails:create-domain-class|grails:create-integration-test|grails:create-pom|grails:create-script|grails:create-service|grails:create-tag-lib|grails:create-unit-test|grails:exec|grails:generate-all|grails:generate-controller|grails:generate-views|grails:help|grails:init|grails:init-plugin|grails:install-templates|grails:list-plugins|grails:maven-clean|grails:maven-compile|grails:maven-functional-test|grails:maven-grails-app-war|grails:maven-test|grails:maven-war|grails:package|grails:package-plugin|grails:run-app|grails:run-app-https|grails:run-war|grails:set-version|grails:test-app|grails:upgrade|grails:validate|grails:validate-plugin|grails:war"
-    local plugin_goals_gwt="gwt:browser|gwt:clean|gwt:compile|gwt:compile-report|gwt:css|gwt:debug|gwt:eclipse|gwt:eclipseTest|gwt:generateAsync|gwt:help|gwt:i18n|gwt:mergewebxml|gwt:resources|gwt:run|gwt:sdkInstall|gwt:source-jar|gwt:soyc|gwt:test"
-    local plugin_goals_help="help:active-profiles|help:all-profiles|help:describe|help:effective-pom|help:effective-settings|help:evaluate|help:expressions|help:system"
-    local plugin_goals_hibernate3="hibernate3:hbm2ddl|hibernate3:help"
-    local plugin_goals_idea="idea:clean|idea:idea"
-    local plugin_goals_install="install:install-file"
-    local plugin_goals_javadoc="javadoc:javadoc|javadoc:jar|javadoc:aggregate"
-    local plugin_goals_jboss="jboss:start|jboss:stop|jboss:deploy|jboss:undeploy|jboss:redeploy"
-    local plugin_goals_jetty="jetty:run|jetty:run-exploded"
-    local plugin_goals_jxr="jxr:jxr"
-    local plugin_goals_license="license:format|license:check"
-    local plugin_goals_liquibase="liquibase:changelogSync|liquibase:changelogSyncSQL|liquibase:clearCheckSums|liquibase:dbDoc|liquibase:diff|liquibase:dropAll|liquibase:help|liquibase:migrate|liquibase:listLocks|liquibase:migrateSQL|liquibase:releaseLocks|liquibase:rollback|liquibase:rollbackSQL|liquibase:status|liquibase:tag|liquibase:update|liquibase:updateSQL|liquibase:updateTestingRollback"
-    local plugin_goals_nexus="nexus:staging-list|nexus:staging-close|nexus:staging-drop|nexus:staging-release|nexus:staging-build-promotion|nexus:staging-profiles-list|nexus:settings-download"
-    local plugin_goals_pmd="pmd:pmd|pmd:cpd|pmd:check|pmd:cpd-check"
-    local plugin_goals_release="release:clean|release:prepare|release:rollback|release:perform|release:stage|release:branch|release:update-versions"
-    local plugin_goals_repository="repository:bundle-create|repository:bundle-pack|repository:help"
-    local plugin_goals_scm="scm:add|scm:checkin|scm:checkout|scm:update|scm:status"
-    local plugin_goals_site="site:site|site:deploy|site:run|site:stage|site:stage-deploy"
-    local plugin_goals_sonar="sonar:sonar"
-    local plugin_goals_source="source:aggregate|source:jar|source:jar-no-fork"
-    local plugin_goals_surefire="surefire:test"
-    local plugin_goals_tomcat6="tomcat6:run|tomcat6:run-war|tomcat6:run-war-only|tomcat6:stop|tomcat6:deploy|tomcat6:undeploy"
-    local plugin_goals_tomcat7="tomcat7:run|tomcat7:run-war|tomcat7:run-war-only|tomcat7:deploy"
-    local plugin_goals_tomcat="tomcat:start|tomcat:stop|tomcat:deploy|tomcat:undeploy|tomcat:undeploy"
-    local plugin_goals_versions="versions:display-dependency-updates|versions:display-plugin-updates|versions:display-property-updates|versions:update-parent|versions:update-properties|versions:update-child-modules|versions:lock-snapshots|versions:unlock-snapshots|versions:resolve-ranges|versions:set|versions:use-releases|versions:use-next-releases|versions:use-latest-releases|versions:use-next-snapshots|versions:use-latest-snapshots|versions:use-next-versions|versions:use-latest-versions|versions:commit|versions:revert"
-    local plugin_goals_war="war:war|war:exploded|war:inplace|war:manifest"
+    # this should probably not happen inside this function, though it has the nice side effect that new plugin configs get picked up instantly
+    if [ ! -n "$(find ${plugin_config_path} -maxdepth 0 -empty)" ]; then for f in ${plugin_config_path}/*; do . $f; done; fi
 
     local common_plugins=`compgen -v | grep "^plugin_goals_.*" | sed 's/plugin_goals_//g' | tr '\n' '|'`
+    local common_params=`compgen -v | grep "^plugin_goal_params_.*" | sed 's/plugin_goal_params_//g' | tr '\n' '|'`
 
     local options="-Dmaven.test.skip=true|-DskipTests|-DskipITs|-Dmaven.surefire.debug|-DenableCiProfile|-Dpmd.skip=true|-Dcheckstyle.skip=true|-Dtycho.mode=maven|-Dmaven.javadoc.skip=true|-Dgwt.compiler.skip"
 
@@ -115,8 +78,23 @@ _mvn()
     local profiles="${profile_settings}|${profile_pom}"
     local IFS=$'|\n'
 
+    # todo: handling if more then one -D param needs completion
+    # todo: should print = instead of whitespace as last char if a item gets completed
     if [[ ${cur} == -D* ]] ; then
-      COMPREPLY=( $(compgen -S ' ' -W "${options}" -- ${cur}) )
+        local goal
+        local show_default=true
+        for goal in $common_params; do
+          local formated_prev=${prev/"-"/"_"}
+          local formated_goal=${goal/"-"/"_"}
+          if [[ ${formated_goal} == ${formated_prev/":"/"_"} ]]; then
+            show_default=false
+            var_name="plugin_goal_params_${formated_goal}"
+            COMPREPLY=( $(compgen -W "${!var_name}" -S ' ' -- ${cur}) )
+          fi
+        done
+        if $show_default; then
+            COMPREPLY=( $(compgen -S ' ' -W "${options}" -- ${cur}) )
+        fi
 
     elif [[ ${prev} == -P ]] ; then
       if [[ ${cur} == *,* ]] ; then
